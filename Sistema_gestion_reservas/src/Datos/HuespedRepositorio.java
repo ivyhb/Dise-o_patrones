@@ -23,6 +23,9 @@ public interface HuespedRepositorio {
     // Buscar huésped por ID
     Huesped buscarPorId(int id) throws SQLException;
 
+    //Buscar huésped por documento
+    Huesped buscarPorDocumento(String documento) throws SQLException;
+    
     // Actualizar huésped
     boolean actualizar(Huesped huesped) throws SQLException;
 

@@ -5,6 +5,7 @@
 package Datos;
 
 import Negocio.entidades.Habitacion;
+import Negocio.enums.EstadoHabitacion;
 import java.util.List;
 import java.sql.SQLException;
 
@@ -22,7 +23,7 @@ public interface HabitacionRepositorio {
 
     boolean actualizar(Habitacion habitacion) throws SQLException;
 
-    boolean cambiarEstado(int id, String estado) throws SQLException;
+    boolean cambiarEstado(int id, EstadoHabitacion estado) throws SQLException; //cambie parámetro de String a Enum
 
     boolean eliminar(int id) throws SQLException;
 }

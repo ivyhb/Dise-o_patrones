@@ -48,8 +48,7 @@ public class HabitacionRepositorioMySQL implements HabitacionRepositorio{
                 }
             }
         }
-
-        return 0;
+        throw new SQLException("No se obtuvo el id generado"); // agregué throw en vez de return 0
     }
 
     // LISTAR HABITACIONES
@@ -158,7 +157,7 @@ public class HabitacionRepositorioMySQL implements HabitacionRepositorio{
 
     // CAMBIAR ESTADO
     @Override
-    public boolean cambiarEstado(int id, String estado)
+    public boolean cambiarEstado(int id, EstadoHabitacion estado)
             throws SQLException {
 
         String sql = "UPDATE habitaciones SET estado=? WHERE id=?";
@@ -171,9 +170,7 @@ public class HabitacionRepositorioMySQL implements HabitacionRepositorio{
 
             try (PreparedStatement ps = cn.prepareStatement(sql)) {
 
-                EstadoHabitacion.valueOf(estado);
-
-                ps.setString(1, estado);
+                ps.setString(1, estado.name()); //pasa de enum a texto
                 ps.setInt(2, id);
 
                 return ps.executeUpdate() > 0;

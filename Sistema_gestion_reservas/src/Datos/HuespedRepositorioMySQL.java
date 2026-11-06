@@ -47,8 +47,7 @@ public class HuespedRepositorioMySQL implements HuespedRepositorio{
                 }
             }
         }
-
-        return 0;
+        throw new SQLException("No se obtuvo el id generado");    
     }
 
     // LISTAR HUESPEDES
@@ -120,7 +119,41 @@ public class HuespedRepositorioMySQL implements HuespedRepositorio{
 
         return null;
     }
+    
+    // BUSCAR POR DOCUMENTO
+    @Override
+    public Huesped buscarPorDocumento(String documento) throws SQLException {
+        String sql = "SELECT * FROM huespedes WHERE documento = ?";
 
+        try (Connection cn = ConexionMySQL.getConnection()) {
+
+            if (cn == null) {
+                throw new SQLException("No hay conexion con MySQL");
+            }
+
+            try (PreparedStatement ps = cn.prepareStatement(sql)) {
+
+                ps.setString(1, documento);
+
+                try (ResultSet rs = ps.executeQuery()) {
+
+                    if (rs.next()) {
+
+                        return new Huesped(
+                                rs.getInt("id"),
+                                rs.getString("nombre"),
+                                rs.getString("documento"),
+                                rs.getString("telefono"),
+                                rs.getString("email")
+                        );
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+    
     // ACTUALIZAR HUESPED
     @Override
     public boolean actualizar(Huesped huesped) throws SQLException {
