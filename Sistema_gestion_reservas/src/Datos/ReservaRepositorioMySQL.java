@@ -127,9 +127,9 @@ public class ReservaRepositorioMySQL implements ReservaRepositorio {
 
     @Override
     public boolean existeCruceFechas(int habitacionId, LocalDate entrada, LocalDate salida) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM reservas"
-                + "WHERE habitacion_id=?"
-                + "AND estado IN('PENDIENTE','CONFIRMADA')"
+        String sql = "SELECT COUNT(*) FROM reservas "
+                + "WHERE habitacion_id = ? "
+                + "AND estado IN('PENDIENTE','CONFIRMADA') "
                 + "AND fecha_entrada < ? AND fecha_salida > ?";
         try (Connection cn = ConexionMySQL.getConnection()) {
             if (cn == null) {
